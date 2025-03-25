@@ -27,7 +27,7 @@ function ModalLogin({ handleclik }:handleType) {
 
 
     return (
-        <div className="absolute z-10 top-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
+        <div className="absolute z-10 top-0 w-full h-screen bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
             <div className="w-full h-fit bg-white  lg:w-1/3 gap-3  flex flex-col justify-center items-center border-1 shadow-2xl border-gray-700">
                 <div className="w-full flex justify-end mr-7">
                     <Image src={picClose} alt="close" width={50} height={50} onClick={handleclik} className="hover:cursor-pointer" />

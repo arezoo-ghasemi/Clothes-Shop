@@ -4,6 +4,8 @@ import "./globals.css";
 import FirstHeader from "@/component/FirstHeader";
 import ContextC from "@/component/ContextC";
 import AuthProvider from "@/component/AuthProvider";
+import Menu from "@/component/Menu";
+import BrandsSlide from "@/component/BrandsSlide";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +35,8 @@ export default function RootLayout({
         <ContextC >
         <AuthProvider>
           <FirstHeader />
+          <Menu/>
+          <BrandsSlide/>
           {children}
           </AuthProvider>
         </ContextC>
