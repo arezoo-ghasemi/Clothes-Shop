@@ -14,7 +14,7 @@ const BrandsSlide = () => {
     const ary = [picNike, picDior, picGucci, picLouis, picPuma, picArmor, picVersace, picZara];
 
     return (
-        <div className="w-full mt-7 border-y-1 justify-center items-center p-1 ">
+        <div className="w-full mt-3 border-y-1 justify-center items-center p-1 ">
             <ul className="flex gap-10">
                 {ary.map((elm, index)=>{
                     return (<li key={index}><Image src={elm} alt="brandLogo" width={50} height={50}/></li>)

@@ -8,7 +8,7 @@ const Menu = () => {
 
     return (
         <div>
-            <ul className="flex lg:gap-7 gap-2 ml-10 mt-3 font-bold lg:text-lg">
+            <ul className="flex lg:gap-7 gap-2 ml-10 mt-1 font-bold lg:text-lg">
                 {ary.map((elm:aryType, index:number)=>{
                     return <MenuItem key={index} item={elm}/>
                 })}
