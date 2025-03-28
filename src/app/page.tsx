@@ -5,7 +5,7 @@ import Image from "next/image";
 import ClothesCard from "@/component/ClothesCard";
 
 const getData = async ()=>{
-  const res = await fetch('https://fakestoreapi.com/products')
+  const res = await fetch('http://localhost:4000/products')
   .then(res=>res.json());
   return res;
 
