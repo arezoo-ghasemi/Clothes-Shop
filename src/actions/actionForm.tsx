@@ -3,7 +3,7 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 
-type elmType = {id:number, username: string, password: string, Credential:string};
+// type elmType = {id:number, username: string, password: string, Credential:string};
 export async function actionForm(state:{success:boolean, message: string}|undefined, formData:FormData){
     const username = formData.get("username");
     const password = formData.get("password");
@@ -15,26 +15,23 @@ export async function actionForm(state:{success:boolean, message: string}|undefi
     }
 
     try{
-        await axios.get("http://localhost:4000/users").then((res)=>{            
-            if(res.status == 200){
-                res.data.map(async (elm: elmType)=>{
-                    if(elm?.username==username){
-                        if(elm.password==password){
-                            (await cookies()).set("TokenUser", "UserLogin");
-                            return {success:true, message:""}
-                        }else{
-                            return {success:false, message:"password is incorrect"}
-                        }
+        const res = await axios.get("http://localhost:4000/users");
+        if(res.status == 200){
+            for(const element of res?.data){
+                if(element?.username==username){
+                    if(element?.password==password){
+                        (await cookies()).set("TokenUser", "UserLogin");
+                        return {success:true, message:""};
+                    }else{
+                        return {success:false, message:"password is incorrect"};
                     }
-                })
-            }
-            
-        })
-
-        return {success:false, message:"The account is not exist"}
+                }
+            };
+        }          
+        return {success:false, message:"The account is not exist"};
 
     }catch{
-        return {success:false, message:"The connection is faild..."}
+        return {success:false, message:"The connection is faild..."};
     }
 
 }

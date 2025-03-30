@@ -31,13 +31,11 @@ export async function registerForm(Rstate:{Rsuccess:boolean, Rmessage: string}|u
                 }
             })
         })
-        await axios.post("http://localhost:4000/users", {id: lengthU, username:username, password:password}).then(async (res)=>{          
-            if(res.status==200 || res.status==201){                
-                (await cookies()).set("TokenUser", "UserLogin");                
-                return {Rsuccess:true, Rmessage:"Your accont create"};
-            }
-        })
-
+        const res =  await axios.post("http://localhost:4000/users", {id: lengthU, username:username, password:password});
+        if(res.status==200 || res.status==201){                
+            (await cookies()).set("TokenUser", "UserLogin");                
+            return {Rsuccess:true, Rmessage:"Your accont create"};
+        }
         return {Rsuccess:false, Rmessage:"The unknown error occured"};
 
     }catch{
