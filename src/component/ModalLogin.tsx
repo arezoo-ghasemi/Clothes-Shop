@@ -29,8 +29,14 @@ function ModalLogin({ handleclik }:handleType) {
         if(state?.success || Rstate?.Rsuccess){
             contextC?.setShow(true);
             handleclik();
+            if(Rstate?.Rsuccess){
+                contextC?.setUserId(Rstate?.Rmessage);
+            }
+            if(state?.success){
+                contextC?.setUserId(state?.message);
+            }
         }
-    },[Rstate?.Rsuccess, contextC, handleclik, state?.success])
+    },[Rstate?.Rmessage, Rstate?.Rsuccess, contextC, handleclik, state?.message, state?.success])
 
     const handleRegister = ()=>{
         setRegister(true);
@@ -42,12 +48,14 @@ function ModalLogin({ handleclik }:handleType) {
 
     return (
         <div className="absolute z-10 top-0 w-full h-screen bg-[rgba(0,0,0,0.5)] flex justify-center items-center">
-            <div className="w-full h-fit bg-white  lg:w-1/3 gap-3  flex flex-col justify-center items-center border-1 shadow-2xl border-gray-700">
+            <div className="w-full h-fit bg-white z-20  lg:w-1/3 gap-3  flex flex-col justify-center items-center border-1 shadow-2xl border-gray-700">
+                
+                {!register?
+                <>
                 <div className="w-full flex justify-end mr-7">
                     <Image src={picClose} alt="close" width={20} height={20} onClick={handleclik} className="hover:cursor-pointer mt-3" />
                 </div>
-                {!register?
-                <form action={formAction} className="w-full p-3 flex flex-col  gap-2">
+                <form action={formAction} className="w-full p-3 flex flex-col  gap-2 ">
                     {state?.message && !state?.success? <p className="text-center font-bold">{state?.message}</p>:""}
                     <input  type="text" placeholder=" Enter your username" name="username" className="w-full border-1 hover:border-blue-400 focus:border-1 focus:border-blue-700  " />
                     <input  type="password" placeholder=" Enter your password" name="password" className="w-full border-1 hover:border-blue-400 focus:border-blue-700 " />
@@ -60,7 +68,7 @@ function ModalLogin({ handleclik }:handleType) {
                         <AuthButton handel={handleclik}/>
                     </div>
                     <p className="text-center text-blue-500 hover:text-blue-600 hover:cursor-pointer" onClick={handleRegister}>Register now</p>
-                </form>:
+                </form></>:
                 <form action={registerF} className="w-full p-3 flex flex-col  gap-2">
                 {Rstate?.Rmessage && !Rstate?.Rsuccess? <p className="text-center font-bold">{Rstate?.Rmessage}</p>:""}
                 <input  type="text" placeholder=" Enter your username" name="username" className="w-full border-1 hover:border-blue-400 focus:border-1 focus:border-blue-700  " />
@@ -76,6 +84,7 @@ function ModalLogin({ handleclik }:handleType) {
                 </div>
                 <p className="text-center text-blue-500 hover:text-blue-600 hover:cursor-pointer" onClick={handleBack}>{"< Back"}</p>
             </form>
+            
             }
             </div>
         </div>

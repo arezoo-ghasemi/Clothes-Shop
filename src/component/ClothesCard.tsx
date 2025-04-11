@@ -1,8 +1,8 @@
 
 import Image from "next/image";
 import picINF from "../pic/ImageNotFound.webp";
-import picFavoritEmpty from "../pic/favorite-empty.svg";
-// import picFavoriteFilled from "../pic/favorite-filled.svg";
+import FavoriteC from "./FavoriteC";
+
 
 type productType = {product: {id?:number, title?: string, price?:number, description?:string, category?: string, image?:string, rating: {rate?:number, count?:number}}}
 const ClothesCard = ({product}:productType) => {
@@ -13,7 +13,7 @@ const ClothesCard = ({product}:productType) => {
             </div>
             <div className="flex justify-between gap-3 ">
                 <p>{`Price: ${product?.price}`}</p>
-                <Image src={picFavoritEmpty} alt="clothesImage" width={10} height={10}/>
+                <FavoriteC clothesId={product?.id} />
             </div>
         </div>
     );

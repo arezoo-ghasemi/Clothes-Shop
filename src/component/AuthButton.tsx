@@ -22,6 +22,7 @@ const AuthButton = ({handel}:handleType) => {
                 })
                 if(!t){
                     axios.post("http://localhost:4000/users", {id:res.data.length, cresential:credentialResponse?.credential}).then((resD)=> console.log(resD));
+                    contextChange?.setUserId(res.data.length);
                 }               
             });
         }catch{

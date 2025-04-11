@@ -7,8 +7,8 @@ type ContextType = {
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
     shopping: boolean;
     setShopping: React.Dispatch<React.SetStateAction<boolean>>;
-    fav: boolean;
-    setFav: React.Dispatch<React.SetStateAction<boolean>>;
+    userId: string|null;
+    setUserId: React.Dispatch<React.SetStateAction<string|null>>;
 };
 export const ContextP = React.createContext<ContextType | undefined>(undefined);
 type chType = {children:ReactNode};
@@ -18,9 +18,9 @@ const ContextC = ({children}:chType) => {
     //state for select clothe for buy or not
     const [shopping, setShopping] = useState<boolean>(false);
     //state for favorite of clothes
-    const [fav, setFav] = useState<boolean>(false);
+    const [userId, setUserId] = useState<string| null>(null);
     return (
-        <ContextP.Provider value={{show, setShow, shopping, setShopping, fav, setFav}}>
+        <ContextP.Provider value={{show, setShow, shopping, setShopping, userId, setUserId}}>
             {children}
         </ContextP.Provider>
     );

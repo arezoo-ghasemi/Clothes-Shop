@@ -14,13 +14,13 @@ const BrandsSlide = () => {
     const ary = [picNike, picDior, picGucci, picLouis, picPuma, picArmor, picVersace, picZara];
 
     return (
-        <div className="w-full mt-3 border-y-1 justify-center items-center p-1 overflow-hidden ">
-            <ul className="flex gap-32 animate-slide">
+        <div className="w-full mt-3 border-y-1 justify-center items-center p-1 overflow-hidden relative z-[-10] ">
+            <ul className="flex gap-32 animate-slide z-0">
                 {ary.map((elm, index)=>{
-                    return (<li key={index}><Image src={elm} alt="brandLogo" width={50} height={50} /></li>)
+                    return (<li key={index} className="relative z-0"><Image src={elm} alt="brandLogo" width={50} height={50} className="relative z-0"/></li>)
                 })}
                 {ary.map((elm, index)=>{
-                    return (<li key={(index+ary.length)}><Image src={elm} alt="brandLogo" width={50} height={50}/></li>)
+                    return (<li key={(index+ary.length)} className="relative z-0"><Image src={elm} alt="brandLogo" width={50} height={50} className="z-0"/></li>)
                 })}
             </ul>
         </div>
