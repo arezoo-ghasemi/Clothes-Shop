@@ -15,6 +15,7 @@ function FavoriteC({clothesId}:clothesType) {
     const handleClick = async()=>{
         if(fav==picFavoritEmpty){
             setFav(picFavoriteFilled);
+            contextC?.setFav(true);
             try{
                 if(contextC?.userId!=null && contextC?.show){
                     const res = await axios.get(`http://localhost:4000/users/${contextC?.userId}`);
@@ -26,6 +27,7 @@ function FavoriteC({clothesId}:clothesType) {
                 }else{
                     alert("you must login...");
                     setFav(picFavoritEmpty);
+                    contextC?.setFav(false);
                 }
                 
             }catch{
@@ -38,7 +40,10 @@ function FavoriteC({clothesId}:clothesType) {
                     const res = await axios.get(`http://localhost:4000/users/${contextC?.userId}`);
                     const ary = [...(res?.data?.fav || [])];
                     if(ary.includes(clothesId)){
-                        const ary2 =ary.filter(item => item!== clothesId);                      
+                        const ary2 =ary.filter(item => item!== clothesId);    
+                        if(ary2.length==0){
+                            contextC?.setFav(false);
+                        }                 
                         await axios.patch(`http://localhost:4000/users/${contextC?.userId}`, {fav: ary2});
                     }                  
                 }else{

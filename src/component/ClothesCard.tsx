@@ -11,6 +11,7 @@ const ClothesCard = ({product}:productType) => {
             <div>
                 {product?.image?<Image src={product?.image} alt="clothesImage" width={150} height={150} />:<Image src={picINF} alt="clothesImage" />}
             </div>
+            <div>{product?.title}</div>
             <div className="flex justify-between gap-3 ">
                 <p>{`Price: ${product?.price}`}</p>
                 <FavoriteC clothesId={product?.id} />

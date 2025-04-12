@@ -6,15 +6,19 @@ import picShoppingEmpty from "../pic/shopping-bag-empty.svg";
 import picShoppingFilled from "../pic/shopping-bag-full.svg";
 import picFavoritEmpty from "../pic/favorite-empty.svg";
 import picFavoriteFilled from "../pic/favorite-filled.svg";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ContextP } from "./ContextC";
 import ModalLogin from "./ModalLogin";
 import Cookies from "universal-cookie";
+import axios from "axios";
+
+type productType = {id?:number, title?: string, price?:number, description?:string, category?: string, image?:string, rating: {rate?:number, count?:number}};
 
 const FirstHeader = () => {
 
     const stateContext = useContext(ContextP);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const refSearch = useRef<HTMLInputElement |null>(null);
 
     const handleLogin = ()=>{
         setShowModal(true);
@@ -31,13 +35,27 @@ const FirstHeader = () => {
         setShowModal(false);
     }
 
+    const handleChange = async()=>{
+        const searchText = refSearch?.current?.value;
+        if(searchText=="" || searchText==null){
+            stateContext?.setClothesL(null);
+        }else{
+            const res = await axios.get("http://localhost:4000/products");            
+            const ary = res.data.map((item:productType)=>{
+                if(item?.title?.startsWith(searchText) || item?.title?.toLowerCase().startsWith(searchText)){
+                    return item;                   
+                }});            
+            stateContext?.setClothesL(ary);
+        }
+    }
+
     return (
         <>
         <div className="relative z-0 w-full ">
             <div className="w-full flex justify-between ">
                 <Image src={picLogo} alt="logo" width={100} height={100} className="ml-7 mt-3 "/>
                 <div className="w-1/2 lg:flex justify-center items-center ml-36 hidden  relative ">
-                    <input type="text" className="w-full h-1/2  bg-blue-100 hover:border-1 focus:border-1 focus:border-blue-700 "  placeholder=" Search products and brands..."/>
+                    <input type="text" ref={refSearch} onChange={handleChange} className="w-full h-1/2  bg-blue-100 hover:border-1 focus:border-1 focus:border-blue-700 "  placeholder=" Search products and brands..."/>
                     <button className="bg-blue-100 absolute right-3 hover:cursor-pointer"><Image src={picSearch} alt="search" /></button>
                 </div>
                 <div className="flex justify-center items-center lg:ml-28 mr-7 gap-1">
