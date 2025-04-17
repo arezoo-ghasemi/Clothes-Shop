@@ -11,14 +11,15 @@ import { ContextP } from "./ContextC";
 import ModalLogin from "./ModalLogin";
 import Cookies from "universal-cookie";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type productType = {id?:number, title?: string, price?:number, description?:string, category?: string, image?:string, rating: {rate?:number, count?:number}};
-
 const FirstHeader = () => {
 
     const stateContext = useContext(ContextP);
     const [showModal, setShowModal] = useState<boolean>(false);
     const refSearch = useRef<HTMLInputElement |null>(null);
+    const router = useRouter();
 
     const handleLogin = ()=>{
         setShowModal(true);
@@ -49,6 +50,26 @@ const FirstHeader = () => {
         }
     }
 
+    const handelShoppingClick = ()=>{
+        router.push(`http://localhost:3000/buy`);       
+    }
+
+    const handleEmptyShopping = ()=>{
+        alert("Basket is Empty...");
+    }
+
+    const handleFaveEmpty = ()=>{
+        if(!stateContext?.show){
+            alert("you must login...");
+        }else{
+            alert("You dont like any produnct...");
+        }
+    }
+
+    const handleFaveFill = ()=>{
+        router.push("http://localhost:3000/favlist");
+    }
+
     return (
         <>
         <div className="relative z-0 w-full ">
@@ -59,8 +80,8 @@ const FirstHeader = () => {
                     <button className="bg-blue-100 absolute right-3 hover:cursor-pointer"><Image src={picSearch} alt="search" /></button>
                 </div>
                 <div className="flex justify-center items-center lg:ml-28 mr-7 gap-1">
-                    {!stateContext?.shopping? <Image  src={picShoppingEmpty} alt="shopping" width={40} height={40} className="hover:cursor-pointer"/>: <Image  src={picShoppingFilled} alt="shopping"  className="hover:cursor-pointer"/>}                   
-                    {!stateContext?.fav?  <Image src={picFavoritEmpty} alt="favorite" width={40} height={40} className="hover:cursor-pointer"/>: <Image src={picFavoriteFilled} alt="favorite" width={40} height={40} className="hover:cursor-pointer"/>}
+                    {!stateContext?.shopping? <Image  src={picShoppingEmpty} alt="shopping" width={40} height={40} onClick={handleEmptyShopping} className="hover:cursor-pointer"/>: <Image  src={picShoppingFilled} alt="shopping" width={40} height={40} onClick={handelShoppingClick}  className="hover:cursor-pointer"/>}                   
+                    {!stateContext?.fav?  <Image src={picFavoritEmpty} alt="favorite" width={40} height={40} onClick={handleFaveEmpty} className="hover:cursor-pointer"/>: <Image src={picFavoriteFilled} alt="favorite" width={40} height={40} onClick={handleFaveFill} className="hover:cursor-pointer"/>}
                     {
                     !stateContext?.show? <button onClick={handleLogin} className=" px-3 py-1 bg-blue-900 text-gray-100 hover:bg-blue-950 hover:cursor-pointer">Login/Register</button>: <button onClick={handleLogout} className=" px-3 py-1 bg-blue-900 text-gray-100 hover:bg-blue-950 hover:cursor-pointer">Logout</button>
                     }

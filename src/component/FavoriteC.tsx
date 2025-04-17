@@ -3,7 +3,7 @@
 import Image from "next/image";
 import picFavoritEmpty from "../pic/favorite-empty.svg";
 import picFavoriteFilled from "../pic/favorite-filled.svg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ContextP } from "./ContextC";
 
@@ -11,6 +11,24 @@ type clothesType = {clothesId:number | undefined};
 function FavoriteC({clothesId}:clothesType) {
     const [fav,setFav] = useState(picFavoritEmpty);
     const contextC = useContext(ContextP);
+
+    useEffect(()=>{
+        const getData = async()=>{
+            if(contextC?.show){
+                try{
+                    const res = await axios.get(`http://localhost:4000/users/${contextC?.userId}`);
+                    res?.data?.fav.map((elm:string)=>{
+                        if(Number(elm)==clothesId){
+                            setFav(picFavoriteFilled);
+                        }
+                    })
+                }catch{
+
+                }
+            }
+        }
+        getData();
+    },[clothesId, contextC?.show, contextC?.userId]);
 
     const handleClick = async()=>{
         if(fav==picFavoritEmpty){
